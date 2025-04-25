@@ -14,8 +14,11 @@ if (loginForm) {
     const errorMsg = document.getElementById("loginError");
 
     try {
+      console.log("Attempting login with:", { email });
       const user = await loginUser(email, password);
+      
       if (user) {
+        console.log("Login successful, redirecting to home");
         localStorage.setItem("currentUser", JSON.stringify(user));
         window.location.href = "/home/";
       } else {
@@ -24,10 +27,10 @@ if (loginForm) {
     } catch (error) {
       console.error("Login error:", error);
       if (errorMsg) {
-        errorMsg.textContent = "Invalid email or password. Please try again.";
+        errorMsg.textContent = `Login failed: ${error.message}`;
         errorMsg.style.display = "block";
       } else {
-        alert("Invalid email or password. Please try again.");
+        alert(`Login failed: ${error.message}`);
       }
     }
   });
