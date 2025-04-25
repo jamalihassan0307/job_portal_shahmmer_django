@@ -1,185 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Job Portal - Home</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-brand">
-        <i class="fas fa-briefcase"></i>
-        Job Portal
-      </div>
-      <div class="nav-items">
-        <a href="home.html" class="active"><i class="fas fa-home"></i> Jobs</a>
-        <a href="myjobs.html"><i class="fas fa-bookmark"></i> My Jobs</a>
-        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-        <button onclick="logout()" class="logout-btn">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <div class="dashboard">
-      <div class="sidebar">
+{% block title %}Job Portal - Home{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="sidebar">
         <div class="search-box">
-          <input type="text" placeholder="Search jobs..." id="searchJobs" />
-          <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search jobs..." id="searchJobs">
+            <i class="fas fa-search"></i>
         </div>
         <div class="filters">
-          <h3>Filters</h3>
-          <div class="filter-group">
-            <label>Job Type</label>
-            <select id="filterJobType" onchange="filterJobs()">
-              <option value="">All Types</option>
-              <option value="Full time">Full time</option>
-              <option value="Part time">Part time</option>
-              <option value="Contract">Contract</option>
-              <option value="Internship">Internship</option>
-              <option value="Remote">Remote</option>
-            </select>
-          </div>
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <label>Job Type</label>
+                <select id="filterJobType" onchange="filterJobs()">
+                    <option value="">All Types</option>
+                    <option value="Full time">Full time</option>
+                    <option value="Part time">Part time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
         </div>
-      </div>
+    </div>
 
-      <div class="main-content">
+    <div class="main-content">
         <div class="page-header">
-          <h1>Available Jobs</h1>
-          <div id="adminControls" class="admin-controls">
-            <button onclick="showAddJobForm()" class="add-job-btn">
-              <i class="fas fa-plus"></i> Post New Job
-            </button>
-          </div>
+            <h1>Available Jobs</h1>
+            <div id="adminControls" class="admin-controls">
+                <button onclick="showAddJobForm()" class="add-job-btn">
+                    <i class="fas fa-plus"></i> Post New Job
+                </button>
+            </div>
         </div>
 
         <div id="jobsList" class="jobs-list">
-          <!-- Jobs will be populated here -->
+            <!-- Jobs will be populated here -->
         </div>
-      </div>
     </div>
+</div>
 
-    <!-- Add Job Modal -->
-    <div id="addJobModal" class="modal">
-      <div class="modal-content">
+<!-- Add Job Modal -->
+<div id="addJobModal" class="modal">
+    <div class="modal-content">
         <div class="modal-header">
-          <h3>Post New Job</h3>
-          <button onclick="closeModal('addJobModal')" class="close-btn">
-            &times;
-          </button>
+            <h3>Post New Job</h3>
+            <button onclick="closeModal('addJobModal')" class="close-btn">&times;</button>
         </div>
         <form id="addJobForm">
-          <div class="form-group">
-            <label>Job Title</label>
-            <input
-              type="text"
-              id="jobTitle"
-              placeholder="Enter job title"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Job Description</label>
-            <textarea
-              id="jobDescription"
-              placeholder="Enter job description"
-              required
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label>Company Logo URL</label>
-            <input
-              type="url"
-              id="companyLogo"
-              placeholder="Enter company logo URL"
-            />
-          </div>
-          <div class="form-group">
-            <label>Company Name</label>
-            <input
-              type="text"
-              id="company"
-              placeholder="Enter company name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Job Type</label>
-            <select id="jobType" required>
-              <option value="">Select Job Type</option>
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-              <option value="Contract">Contract</option>
-              <option value="Internship">Internship</option>
-              <option value="Remote">Remote</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Salery</label>
-            <input
-              type="text"
-              id="Salery"
-              placeholder="Enter Salery"
-              required
-            />
-          </div>
-          <button type="submit" class="submit-btn">Post Job</button>
+            <div class="form-group">
+                <label>Job Title</label>
+                <input type="text" id="jobTitle" placeholder="Enter job title" required>
+            </div>
+            <div class="form-group">
+                <label>Job Description</label>
+                <textarea id="jobDescription" placeholder="Enter job description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Company Logo URL</label>
+                <input type="url" id="companyLogo" placeholder="Enter company logo URL">
+            </div>
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" id="company" placeholder="Enter company name" required>
+            </div>
+            <div class="form-group">
+                <label>Job Type</label>
+                <select id="jobType" required>
+                    <option value="">Select Job Type</option>
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Salary</label>
+                <input type="text" id="Salery" placeholder="Enter Salary" required>
+            </div>
+            <button type="submit" class="submit-btn">Post Job</button>
         </form>
-      </div>
     </div>
+</div>
 
-    <!-- Apply Job Modal -->
-    <div id="applyJobModal" class="modal">
-      <div class="modal-content">
+<!-- Apply Job Modal -->
+<div id="applyJobModal" class="modal">
+    <div class="modal-content">
         <div class="modal-header">
-          <h3>Apply for Job</h3>
-          <button onclick="closeModal('applyJobModal')" class="close-btn">&times;</button>
+            <h3>Apply for Job</h3>
+            <button onclick="closeModal('applyJobModal')" class="close-btn">&times;</button>
         </div>
         <form id="applyJobForm">
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" placeholder="Enter your full name" required>
-          </div>
-          <div class="form-group">
-            <label for="applyEmail">Email</label>
-            <input type="email" id="applyEmail" placeholder="Enter your email" required>
-          </div>
-          <div class="form-group">
-            <label for="experience">Experience & Qualifications</label>
-            <textarea id="experience" placeholder="Describe your relevant experience and qualifications" required></textarea>
-          </div>
-          <button type="submit" class="submit-btn">Submit Application</button>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="applyEmail">Email</label>
+                <input type="email" id="applyEmail" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience & Qualifications</label>
+                <textarea id="experience" placeholder="Describe your relevant experience and qualifications" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit Application</button>
         </form>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 Job portal. All rights reserved.</p>
-    </div>
-  </footer> <section class="categories">
-      <h2>Popular Job Categories</h2>
-      <div class="category-grid">
-        <div class="category-card">
-          <i class="fas fa-laptop-code"></i>
-          <h3>Technology</h3>
-          <p>1200+ Jobs</p>
-        </div>
-        <div class="category-card">
-          <i class="fas fa-chart-line"></i>
-          <h3>Marketing</h3>
-          <p>800+ Jobs</p>
-        </div>
+</div>
 
-    <script src="constants.js"></script>
-    <script src="script.js"></script>
-  </body>
-</html>
+<section class="categories">
+    <h2>Popular Job Categories</h2>
+    <div class="category-grid">
+        <div class="category-card">
+            <i class="fas fa-laptop-code"></i>
+            <h3>Technology</h3>
+            <p>1200+ Jobs</p>
+        </div>
+        <div class="category-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Marketing</h3>
+            <p>800+ Jobs</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
