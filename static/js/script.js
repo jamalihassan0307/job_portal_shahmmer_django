@@ -13,17 +13,11 @@ if (loginForm) {
     const password = document.getElementById("password").value;
     const errorMsg = document.getElementById("loginError");
 
-
-    
     try {
-      const users = await fetchUsers();
-      const user = users.find(
-        (u) => u.email === email && u.password === password
-      );
-
+      const user = await loginUser(email, password);
       if (user) {
         localStorage.setItem("currentUser", JSON.stringify(user));
-        window.location.href = "home.html";
+        window.location.href = "/home/";
       } else {
         throw new Error("Invalid credentials");
       }
@@ -33,7 +27,7 @@ if (loginForm) {
         errorMsg.textContent = "Invalid email or password. Please try again.";
         errorMsg.style.display = "block";
       } else {
-        alert("Invalid email or word. Please try again.");
+        alert("Invalid email or password. Please try again.");
       }
     }
   });
