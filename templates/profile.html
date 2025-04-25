@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal - Profile</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-briefcase"></i>
+        Job Portal
+      </div>
+      <div class="nav-items">
+        <a href="home.html"><i class="fas fa-home"></i> Jobs</a>
+        <a href="myjobs.html"><i class="fas fa-bookmark"></i> My Jobs</a>
+        <a href="profile.html" class="active"
+          ><i class="fas fa-user"></i> Profile</a
+        >
+        <button onclick="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-header">
+          <div class="profile-image-container">
+            <img
+              id="profileImage"
+              src="https://via.placeholder.com/150"
+              alt="Profile Picture"
+              class="profile-image"
+            />
+            <div class="profile-image-overlay">
+              <i class="fas fa-camera"></i>
+              <span>Update Photo</span>
+            </div>
+          </div>
+          <div class="profile-info">
+            <h2 id="userName">User Profile</h2>
+            <p id="userEmail" class="text-muted"></p>
+          </div>
+        </div>
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" readonly />
+          </div>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="profile_picture">Profile Picture URL</label>
+            <input
+              type="url"
+              id="profile_picture"
+              placeholder="Enter profile picture URL"
+            />
+          </div>
+          <div class="form-group">
+            <label for="resume">Resume Link</label>
+            <input type="url" id="resume" placeholder="Enter your resume URL" />
+          </div>
+          <button type="submit" class="submit-btn">Update Profile</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="constants.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
