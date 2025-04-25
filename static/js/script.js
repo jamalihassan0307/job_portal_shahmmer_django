@@ -40,7 +40,7 @@ if (loginForm) {
 function checkAuth() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
-    window.location.href = "index.html";
+    window.location.href = "/";
     return null;
   }
   return JSON.parse(currentUser);
@@ -119,7 +119,7 @@ function logout() {
 }
 
 // Initialize page
-if (window.location.pathname.includes("/home/")) {
+if (window.location.pathname === "/home/") {
   const currentUser = checkAuth();
   if (currentUser.roleId !== 1) {
     document.getElementById("adminControls").style.display = "none";
@@ -281,10 +281,10 @@ if (profileForm) {
 }
 
 // Initialize pages
-if (window.location.pathname.includes("myjobs.html")) {
+if (window.location.pathname === "/myjobs/") {
   checkAuth();
   loadMyApplications();
-} else if (window.location.pathname.includes("profile.html")) {
+} else if (window.location.pathname === "/profile/") {
   checkAuth();
   loadProfile();
 }
