@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse('<h1>Welcome to your Django project!</h1>')
+    return render(request, 'home.html')
 
 def index(request):
     return render(request, 'index.html')
