@@ -115,11 +115,11 @@ function applyJob(jobId) {
 // Logout functionality
 function logout() {
   localStorage.removeItem("currentUser");
-  window.location.href = "index.html";
+  window.location.href = "/";
 }
 
 // Initialize page
-if (window.location.pathname.includes("home.html")) {
+if (window.location.pathname.includes("/home/")) {
   const currentUser = checkAuth();
   if (currentUser.roleId !== 1) {
     document.getElementById("adminControls").style.display = "none";
