@@ -1,5 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
+
+class CustomUserManager(UserManager):
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        if not Role.objects.filter(name='admin').exists():
+            Role.objects.create(name='admin')
+        extra_fields['role'] = Role.objects.get(name='admin')
+        return self._create_user(username, email, password, **extra_fields)
 
 class Role(models.Model):
     name = models.CharField(max_length=50)
@@ -13,6 +22,8 @@ class User(AbstractUser):
     resume = models.TextField(null=True, blank=True)
     profile_picture = models.TextField(null=True, blank=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.username
