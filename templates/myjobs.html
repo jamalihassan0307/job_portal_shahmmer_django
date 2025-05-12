@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Portal - My Jobs{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+  <div class="main-content">
+    <div class="page-header">
+      <h1>My Applications</h1>
+    </div>
+
+    <div class="jobs-grid">
+      {% for application in applications %}
+      <div class="job-card">
+        <div class="job-card-header">
+          <div class="job-logo">
+            <img src="{{ application.job.logo|default:'https://via.placeholder.com/60' }}" 
+                 alt="{{ application.job.company }}" 
+                 onerror="this.src='https://via.placeholder.com/60'">
+          </div>
+          <div class="job-title">
+            <h3>{{ application.job.title }}</h3>
+            <div class="job-company">
+              <i class="fas fa-building"></i>
+              {{ application.job.company }}
+            </div>
+          </div>
+        </div>
+        <div class="job-body">
+          <div class="job-meta">
+            <div class="job-tags">
+              <span class="job-tag">
+                <i class="fas fa-briefcase"></i>
+                {{ application.job.jobType }}
+              </span>
+              <span class="application-status status-{{ application.status }}">
+                {{ application.status|title }}
+              </span>
+              <span class="job-tag">
+                <i class="fas fa-clock"></i>
+                Applied on: {{ application.appliedAt|date:"M d, Y" }}
+              </span>
+            </div>
+          </div>
+          <div class="application-details">
+            <h4>Your Experience:</h4>
+            <p>{{ application.experience }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="no-applications">
+        <i class="fas fa-briefcase"></i>
+        <h3>No Applications Yet</h3>
+        <p>You haven't applied to any jobs yet.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %} 
