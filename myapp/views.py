@@ -157,3 +157,48 @@ def delete_job(request, job_id):
     
     return redirect('home')
 
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+        
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        if password1 != password2:
+            messages.error(request, 'Passwords do not match')
+            return render(request, 'signup.html')
+            
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists')
+            return render(request, 'signup.html')
+            
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists')
+            return render(request, 'signup.html')
+        
+        try:
+            # Get the regular user role
+            user_role = Role.objects.get(name='user')
+            
+            # Create user
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password1,
+                role=user_role
+            )
+            
+            # Log the user in
+            login(request, user)
+            messages.success(request, 'Account created successfully')
+            return redirect('home')
+            
+        except Exception as e:
+            messages.error(request, f'Error creating account: {str(e)}')
+            return render(request, 'signup.html')
+    
+    return render(request, 'signup.html')
+
