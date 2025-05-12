@@ -16,19 +16,18 @@ def login_view(request):
         return redirect('home')
         
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
         
-        try:
-            user = User.objects.get(email=email)
-            user = authenticate(request, username=user.username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.error(request, 'Invalid email or password')
-        except User.DoesNotExist:
-            messages.error(request, 'No account found with this email')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password')
     
     return render(request, 'index.html')
 
