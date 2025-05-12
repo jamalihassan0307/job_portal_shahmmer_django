@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Portal - Apply for Job{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="profile-container">
+    <div class="job-card">
+      <div class="job-card-header">
+        <div class="job-logo">
+          <img src="{{ job.logo|default:'https://via.placeholder.com/60' }}" 
+               alt="{{ job.company }}" 
+               onerror="this.src='https://via.placeholder.com/60'">
+        </div>
+        <div class="job-title">
+          <h3>{{ job.title }}</h3>
+          <div class="job-company">
+            <i class="fas fa-building"></i>
+            {{ job.company }}
+          </div>
+        </div>
+      </div>
+      <div class="job-body">
+        <p class="job-description">{{ job.description }}</p>
+        <div class="job-meta">
+          <div class="job-tags">
+            <span class="job-tag">
+              <i class="fas fa-briefcase"></i>
+              {{ job.jobType }}
+            </span>
+            <span class="job-tag salary-tag">
+              <i class="fas fa-money-bill-wave"></i>
+              ${{ job.salary }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" class="mt-4">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="experience">Experience & Qualifications</label>
+        <textarea 
+          id="experience" 
+          name="experience" 
+          rows="6" 
+          placeholder="Describe your relevant experience and qualifications" 
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+  </div>
+</div>
+{% endblock %} 
