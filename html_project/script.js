@@ -13,24 +13,27 @@ if (loginForm) {
     const password = document.getElementById("password").value;
     const errorMsg = document.getElementById("loginError");
 
+
+    
     try {
-      console.log("Attempting login with:", { email });
-      const user = await loginUser(email, password);
-      
+      const users = await fetchUsers();
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
+
       if (user) {
-        console.log("Login successful, redirecting to home");
         localStorage.setItem("currentUser", JSON.stringify(user));
-        window.location.href = "/home/";
+        window.location.href = "home.html";
       } else {
         throw new Error("Invalid credentials");
       }
     } catch (error) {
       console.error("Login error:", error);
       if (errorMsg) {
-        errorMsg.textContent = `Login failed: ${error.message}`;
+        errorMsg.textContent = "Invalid email or password. Please try again.";
         errorMsg.style.display = "block";
       } else {
-        alert(`Login failed: ${error.message}`);
+        alert("Invalid email or word. Please try again.");
       }
     }
   });
@@ -40,7 +43,7 @@ if (loginForm) {
 function checkAuth() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
-    window.location.href = "/";
+    window.location.href = "index.html";
     return null;
   }
   return JSON.parse(currentUser);
@@ -115,11 +118,11 @@ function applyJob(jobId) {
 // Logout functionality
 function logout() {
   localStorage.removeItem("currentUser");
-  window.location.href = "/";
+  window.location.href = "index.html";
 }
 
 // Initialize page
-if (window.location.pathname === "/home/") {
+if (window.location.pathname.includes("home.html")) {
   const currentUser = checkAuth();
   if (currentUser.roleId !== 1) {
     document.getElementById("adminControls").style.display = "none";
@@ -281,10 +284,10 @@ if (profileForm) {
 }
 
 // Initialize pages
-if (window.location.pathname === "/myjobs/") {
+if (window.location.pathname.includes("myjobs.html")) {
   checkAuth();
   loadMyApplications();
-} else if (window.location.pathname === "/profile/") {
+} else if (window.location.pathname.includes("profile.html")) {
   checkAuth();
   loadProfile();
 }

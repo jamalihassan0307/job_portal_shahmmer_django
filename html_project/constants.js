@@ -25,19 +25,12 @@ async function fetchUsers() {
 async function loginUser(email, password) {
   try {
     const users = await fetchUsers();
-    console.log("Attempting login with:", { email, password });
-    console.log("Available users:", users);
-    
     const user = users.find(
       (u) => u.email === email && u.password === password
     );
-    
     if (user) {
-      console.log("Login successful for user:", user);
       return user;
     }
-    
-    console.log("No matching user found");
     throw new Error("Invalid credentials");
   } catch (error) {
     console.error("Login error:", error);
