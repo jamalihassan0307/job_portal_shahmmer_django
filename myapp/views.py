@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from .models import User, Job, Application, Role
 from django.utils import timezone
+import decimal
 
 @login_required
 def home(request):
@@ -85,18 +86,39 @@ def post_job(request):
         return redirect('home')
         
     if request.method == 'POST':
-        Job.objects.create(
-            title=request.POST.get('title'),
-            description=request.POST.get('description'),
-            company=request.POST.get('company'),
-            logo=request.POST.get('logo'),
-            jobType=request.POST.get('jobType'),
-            salary=request.POST.get('salary'),
-            createdAt=int(timezone.now().timestamp()),
-            user=request.user
-        )
-        messages.success(request, 'Job posted successfully')
-        return redirect('home')
+        try:
+            # Get form data
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            company = request.POST.get('company')
+            logo = request.POST.get('logo')
+            jobType = request.POST.get('jobType')
+            salary = request.POST.get('salary')
+
+            # Validate required fields
+            if not all([title, description, company, jobType, salary]):
+                messages.error(request, 'Please fill in all required fields')
+                return render(request, 'post_job.html')
+
+            # Create job
+            Job.objects.create(
+                title=title,
+                description=description,
+                company=company,
+                logo=logo if logo else None,
+                jobType=jobType,
+                salary=decimal.Decimal(salary),
+                createdAt=int(timezone.now().timestamp()),
+                user=request.user
+            )
+            messages.success(request, 'Job posted successfully')
+            return redirect('home')
+        except decimal.InvalidOperation:
+            messages.error(request, 'Please enter a valid salary amount')
+            return render(request, 'post_job.html')
+        except Exception as e:
+            messages.error(request, f'Error creating job: {str(e)}')
+            return render(request, 'post_job.html')
     
     return render(request, 'post_job.html')
 

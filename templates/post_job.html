@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Portal - Post New Job{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="profile-container">
+    <div class="page-header">
+      <h2>Post New Job</h2>
+      <p class="text-muted">Fill in the details below to create a new job listing</p>
+    </div>
+
+    <form method="POST" class="job-form">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="title">Job Title</label>
+        <input type="text" id="title" name="title" required placeholder="e.g. Senior Software Engineer" />
+      </div>
+
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company" required placeholder="e.g. Tech Solutions Inc." />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Job Description</label>
+        <textarea id="description" name="description" rows="6" required 
+          placeholder="Describe the job role, responsibilities, and requirements"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="jobType">Job Type</label>
+        <select id="jobType" name="jobType" required>
+          <option value="">Select Job Type</option>
+          <option value="Full time">Full Time</option>
+          <option value="Part time">Part Time</option>
+          <option value="Contract">Contract</option>
+          <option value="Internship">Internship</option>
+          <option value="Remote">Remote</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="salary">Salary (USD)</label>
+        <input type="number" id="salary" name="salary" required min="0" step="0.01" 
+          placeholder="e.g. 75000.00" />
+      </div>
+
+      <div class="form-group">
+        <label for="logo">Company Logo URL (Optional)</label>
+        <input type="url" id="logo" name="logo" placeholder="https://example.com/logo.png" />
+      </div>
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Post Job</button>
+        <a href="{% url 'home' %}" class="cancel-btn">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .job-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .cancel-btn {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    background: #f3f4f6;
+    color: #4b5563;
+    transition: background-color 0.3s;
+  }
+
+  .cancel-btn:hover {
+    background: #e5e7eb;
+  }
+
+  .submit-btn {
+    flex: 1;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+</style>
+{% endblock %} 
