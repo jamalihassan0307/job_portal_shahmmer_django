@@ -13,6 +13,7 @@ def home(request):
     return render(request, 'home.html', {'jobs': jobs})
 
 def login_view(request):
+    
     if request.user.is_authenticated:
         return redirect('home')
         

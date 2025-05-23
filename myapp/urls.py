@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('post-job/', views.post_job, name='post_job'),
     path('edit-job/<int:job_id>/', views.edit_job, name='edit_job'),
     path('delete-job/<int:job_id>/', views.delete_job, name='delete_job'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
