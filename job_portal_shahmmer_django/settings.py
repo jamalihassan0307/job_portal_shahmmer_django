@@ -191,5 +191,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = [
     ('picture', 'picture'),
 ]
 
+# Ensure user creation is handled properly
+SOCIAL_AUTH_CREATE_USERS = True
+SOCIAL_AUTH_USER_MODEL = 'myapp.User'
+
 
 

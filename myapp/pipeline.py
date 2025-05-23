@@ -7,6 +7,9 @@ User = get_user_model()
 def save_google_user(backend, user, response, *args, **kwargs):
     if backend.name == 'google-oauth2':
         with transaction.atomic():
+            # Get or create user role
+            user_role, created = Role.objects.get_or_create(name='user')
+            
             # Update user details from Google
             if not user.first_name and response.get('name'):
                 user.first_name = response.get('name', '').split()[0]
@@ -15,10 +18,8 @@ def save_google_user(backend, user, response, *args, **kwargs):
             if not user.email and response.get('email'):
                 user.email = response.get('email')
             
-            # Set default role for Google users
-            if not user.role:
-                user_role = Role.objects.get(name='user')
-                user.role = user_role
+            # Always set the role
+            user.role = user_role
             
             # Save the user
             user.save() 
